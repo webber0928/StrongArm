@@ -1,0 +1,23 @@
+{
+  "name": "strongarm",
+  "version": "1.0.0",
+  "description": "球隊紀錄",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/webber0928/StrongArm.git"
+  },
+  "author": "Webber Wu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/webber0928/StrongArm/issues"
+  },
+  "homepage": "https://github.com/webber0928/StrongArm#readme",
+  "dependencies": {
+    "cheerio": "^1.0.0-rc.10",
+    "request": "^2.88.2"
+  }
+}
