@@ -56,8 +56,41 @@ const work = function () {
       })
     }
 
+    const playerList = []
+    const playerTableTr = teamDetail.find("#players-table tr")
+    for (let i = 0; i < playerTableTr.length - 1; i++) {
+      if (i < 2) continue
+
+      let nameAndId = playerTableTr.eq(i).find('td').eq(0).find('a').text().split(' #') // 球員姓名
+      let name = nameAndId[0] // 球員姓名
+      let id = parseFloat(nameAndId[1]) // 球員背號
+      let averageScore = parseFloat(playerTableTr.eq(i).find('td').eq(1).text()) // 平均得分
+      let goal2 = parseFloat(playerTableTr.eq(i).find('td').eq(2).text().trim()) // 2分球進球
+      let shot2 = parseFloat(playerTableTr.eq(i).find('td').eq(3).text().trim()) // 2分球投球
+      let goal3 = parseFloat(playerTableTr.eq(i).find('td').eq(5).text().trim()) // 3分球進球
+      let shot3 = parseFloat(playerTableTr.eq(i).find('td').eq(6).text().trim()) // 3分球投球
+      let goalFree = parseFloat(playerTableTr.eq(i).find('td').eq(8).text().trim()) // 罰球進球
+      let shotFree = parseFloat(playerTableTr.eq(i).find('td').eq(9).text().trim()) // 罰球投球
+      let offensiveRebound = parseFloat(playerTableTr.eq(i).find('td').eq(11).text().trim()) // 進攻籃板
+      let defensiveRebound = parseFloat(playerTableTr.eq(i).find('td').eq(12).text().trim()) // 防守籃板
+      let rebound = offensiveRebound + defensiveRebound // 籃板
+      let assist = parseFloat(playerTableTr.eq(i).find('td').eq(14).text().trim()) // 助攻
+      let steal = parseFloat(playerTableTr.eq(i).find('td').eq(15).text().trim()) // 抄截
+      let blockShot = parseFloat(playerTableTr.eq(i).find('td').eq(16).text().trim()) // 阻攻
+      let foul = parseFloat(playerTableTr.eq(i).find('td').eq(17).text().trim()) // 犯規
+      let turnover = parseFloat(playerTableTr.eq(i).find('td').eq(18).text().trim()) // 失誤
+      let count = parseFloat(playerTableTr.eq(i).find('td').eq(19).text().trim()) // 出場次數
+
+      playerList.push({
+        name, id, averageScore, goal2, shot2, goal3, shot3, goalFree, shotFree, offensiveRebound, defensiveRebound,
+        rebound, assist, steal, blockShot, foul, turnover, count
+      })
+    }
+
+    console.log(playerList)
+
     // 寫入 result.json 檔案
-    fs.writeFileSync("gameResult.json", JSON.stringify({ myTeam, teamList }, null, 2))
+    fs.writeFileSync("gameResult.json", JSON.stringify({ myTeam, teamList, playerList }, null, 2))
   })
 }
 
