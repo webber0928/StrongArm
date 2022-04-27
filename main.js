@@ -1,17 +1,11 @@
-const request = require("request")
-const cheerio = require("cheerio")
 const fs = require("fs")
 const config = require('./config')
 
-const work = function () {
-  request({
-    url: config.team,
-    method: "GET"
-  }, function (error, response, body) {
-    if (error || !body) {
-      return
-    }
-    const $ = cheerio.load(body) // 載入 body
+const libs = require('./libs')
+
+const work = async function () {
+
+    const $ = await libs.html.query(config.team)
     const teamDetail = $(".team-detail")
 
     const myTeam = {}
@@ -32,6 +26,7 @@ const work = function () {
       let time = new Date(teamTableTr.eq(i).find('td').eq(0).html().replace('<br>', ' '))
       let timestamp = time.getTime() // 比賽時間
       let competitor = teamTableTr.eq(i).find('td').eq(1).find('a').eq(1).text() // 對手名稱
+      let url = teamTableTr.eq(i).find('td').eq(2).find('a').attr('href')
       let score = teamTableTr.eq(i).find('td').eq(2).find('a').text().split(':')
       let myScore = parseInt(score[0]) // 我方分數
       let youScore = parseInt(score[1]) // 敵方分數
@@ -51,6 +46,7 @@ const work = function () {
       let turnover = parseInt(teamTableTr.eq(i).find('td').eq(20).text().trim()) // 失誤
 
       teamList.push({
+        url,
         timestamp, competitor, myScore, youScore, goal2, shot2, goal3, shot3, goalFree, shotFree, offensiveRebound, defensiveRebound,
         rebound, assist, steal, blockShot, foul, turnover
       })
@@ -91,7 +87,6 @@ const work = function () {
 
     // 寫入 result.json 檔案
     fs.writeFileSync("gameResult.json", JSON.stringify({ myTeam, teamList, playerList }, null, 2))
-  })
 }
 
 work()
