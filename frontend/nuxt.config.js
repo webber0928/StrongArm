@@ -1,6 +1,8 @@
 const fs = require("fs");
 const dotenv = require("dotenv");
-import colors from 'vuetify/es5/util/colors'
+import colors from "vuetify/es5/util/colors";
+import languages from "./static/lang/languages";
+import logger from "connect-logger";
 
 // 切換環境使用
 function envFileName() {
@@ -25,7 +27,14 @@ console.info(
   `[START] ENV: ${process.env.NODE_ENV}, BaseUrl: ${process.env.API_URL_BROWSER}`
 );
 
+console.info(
+  `[START] ENV: ${process.env.NODE_ENV}, BaseInvestorUrl: ${process.env.INVESTOR_API_URL}`
+);
+console.log("INVESTOR_API_URL", process.env.INVESTOR_API_URL);
+console.log("GENERIC_API_URL", process.env.GENERIC_API_URL);
+
 export default {
+  serverMiddleware: [logger({ format: "%date %status %method %url (%time)" })],
   vue: {
     config: {
       productionTip: true,
@@ -48,27 +57,47 @@ export default {
   },
 
   // Global CSS: https://go.nuxtjs.dev/config-css
-  css: [],
+  css: ["@/assets/vendors/hamburger-menu.css"],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ["@/plugins/axios", "@/plugins/api-plugins"],
+  plugins: [
+    "@/plugins/axios",
+    "@/plugins/api-plugins",
+    "@/plugins/i18n-config.js",
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
 
   // Modules for dev and build (recommended): https://go.nuxtjs.dev/config-modules
   buildModules: [
-    '@nuxtjs/vuetify',
+    "@nuxtjs/vuetify",
     "@nuxtjs/router",
     ["@nuxtjs/dotenv", { filename: envFileName(), path: `${__dirname}/env/` }],
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
-  modules: ["@nuxtjs/axios"],
+  modules: [
+    ["@nuxtjs/html-minifier", { log: "once", logHtml: false }],
+    "@nuxtjs/axios",
+    "@nuxtjs/i18n",
+  ],
 
-   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
-   vuetify: {
-    customVariables: ['~/assets/variables.scss'],
+  i18n: {
+    strategy: "no_prefix",
+    lazy: true,
+    locales: languages,
+    defaultLocale: "zh",
+    parsePages: false,
+    vueI18n: {
+      fallbackLocale: "en",
+    },
+    langDir: "static/lang/",
+  },
+
+  // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
+  vuetify: {
+    customVariables: ["~/assets/variables.scss"],
     theme: {
       dark: true,
       themes: {
@@ -79,14 +108,16 @@ export default {
           info: colors.teal.lighten1,
           warning: colors.amber.base,
           error: colors.deepOrange.accent4,
-          success: colors.green.accent3
-        }
-      }
-    }
+          success: colors.green.accent3,
+        },
+      },
+    },
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    standalone: true,
+  },
   server: {
     host: "0.0.0.0", // default: localhost
   },
@@ -94,5 +125,21 @@ export default {
     proxy: true,
     prefix: "/", // baseURL
     credentials: true,
+  },
+  proxy: {
+    "/generic": {
+      target: process.env.GENERIC_API_URL,
+      changeOrigin: true,
+      pathRewrite: {
+        "^/generic": "",
+      },
+    },
+    "/investor": {
+      target: process.env.INVESTOR_API_URL,
+      changeOrigin: true,
+      pathRewrite: {
+        "^/investor": "",
+      },
+    },
   },
 };

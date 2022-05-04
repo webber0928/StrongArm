@@ -1,7 +1,7 @@
 <template>
   <v-app id="inspire">
     <LayoutHeader @toggleMenu="toggleMenu"/>
-    <v-main class="grey lighten-3">
+    <v-main class="lighten-3">
       <v-container>
         <v-row>
           <v-col cols="2">
@@ -37,7 +37,7 @@
 
           <v-col>
             <v-sheet
-              min-height="70vh"
+              min-height="50vh"
               rounded="lg"
             >
               <nuxt />
@@ -76,6 +76,19 @@ export default {
   methods: {
     toggleMenu() {
       this.drawer = !this.drawer
+    }
+  },
+  mounted() {
+    this.$nextTick(() => {
+      setTimeout(() => {
+        this.$nuxt.$loading.finish()
+        this.play = false
+      }, 500)
+      this.$nuxt.$loading.start()
+    })
+    const preloader = document.getElementById('preloader')
+    if (preloader !== null || undefined) {
+      preloader.remove()
     }
   }
 }
