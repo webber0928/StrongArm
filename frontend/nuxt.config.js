@@ -34,6 +34,7 @@ console.log("INVESTOR_API_URL", process.env.INVESTOR_API_URL);
 console.log("GENERIC_API_URL", process.env.GENERIC_API_URL);
 
 export default {
+  // logger setting
   serverMiddleware: [logger({ format: "%date %status %method %url (%time)" })],
   vue: {
     config: {
@@ -43,7 +44,7 @@ export default {
   },
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    title: "nuxt-starter-template",
+    title: "Strong Arm 官網",
     htmlAttrs: {
       lang: "en",
     },

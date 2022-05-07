@@ -1,13 +1,11 @@
 <template>
-  <div>
-    註冊
-  </div>
+  <div>球隊介紹</div>
 </template>
 
 <script>
-  export default {
-    
-  }
+export default {
+  layout: 'default',
+}
 </script>
 
 <style lang="scss" scoped>

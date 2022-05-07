@@ -15,21 +15,23 @@ export function createRouter() {
     routes: [
       {
         path: '/',
-        component: () => import("@/pages/index").then(m => m.default || m),
-        name: '首頁'
+        name: '首頁',
+        component: () => import("@/pages/home/index").then(m => m.default || m),
       },
       {
-        path: '/users',
-        component: () => import("@/pages/user/index").then(m => m.default || m)
+        path: '/player/:id',
+        name: '球員資料',
+        component: () => import("@/pages/player/_id").then(m => m.default || m)
       },
       {
-        path: '/login',
-        component: () => import("@/pages/login/index").then(m => m.default || m)
+        path: '/team',
+        name: '球隊介紹',
+        component: () => import("@/pages/teamInfo/index").then(m => m.default || m)
       },
       {
-        path: '/register',
-        component: () => import("@/pages/register/index").then(m => m.default || m),
-        name: '註冊'
+        path: '/team/pref',
+        name: '球員數據',
+        component: () => import("@/pages/teamPref/index").then(m => m.default || m),
       },
       {
         path: '/404',
@@ -38,7 +40,7 @@ export function createRouter() {
       },
       {
         path: '*',
-        // name: '404 not Found',
+        name: '404 not Found',
         redirect: '/404'
       }
     ]

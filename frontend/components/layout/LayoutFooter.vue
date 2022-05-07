@@ -1,6 +1,6 @@
 <template>
   <v-footer dark class="px-0 py-0">
-    <v-card flat tile class="secondary white--text text-center">
+    <v-card flat tile class="accent white--text text-center">
       <v-card-text>
         <v-btn
           v-for="(icon, i) in icons"
@@ -14,12 +14,12 @@
         </v-btn>
       </v-card-text>
 
-      <v-card-text class="white--text pt-0"> 文字文字文字文字文字 </v-card-text>
+      <v-card-text class="white--text pt-0"> 強壯左手網站 </v-card-text>
 
       <v-divider></v-divider>
 
       <v-card-text class="white--text">
-        {{ new Date().getFullYear() }} — <strong>Webber WEB</strong>
+        {{ new Date().getFullYear() }} — <strong> © 由 Webber 設計</strong>
       </v-card-text>
     </v-card>
   </v-footer>
@@ -31,29 +31,29 @@ export default {
       fixed: false,
       icons: [
         {
-          text: "mdi-facebook",
-          link: "",
+          text: 'mdi-facebook',
+          link: '',
         },
         {
-          text: "mdi-twitter",
-          link: "",
+          text: 'mdi-twitter',
+          link: '',
         },
         {
-          text: "mdi-linkedin",
-          link: "",
+          text: 'mdi-linkedin',
+          link: '',
         },
         {
-          text: "mdi-instagram",
-          link: "https://www.google.com",
+          text: 'mdi-instagram',
+          link: 'https://www.google.com',
         },
       ],
-    };
+    }
   },
-};
+}
 </script>
 
 <style lang="scss" scoped>
-  .v-card {
-    width: 100%;
-  }
+.v-card {
+  width: 100%;
+}
 </style>

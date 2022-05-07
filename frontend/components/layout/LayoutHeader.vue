@@ -8,6 +8,7 @@
       transition="fade-transition"
       right
       :style="{ zIndex: 6, width: '100%' }"
+      class="accent"
     >
       <v-list dense>
         <div class="text-right">
@@ -24,17 +25,10 @@
             </span>
           </v-btn>
         </div>
-        <v-row
-          align="center"
-          justify="center"
-          no-gutters
-        >
+        <v-row align="center" justify="center" no-gutters>
           <v-col cols="3" sm="3" align="center" justify="center">
             <v-avatar>
-              <img
-                src="https://cdn.vuetifyjs.com/images/john.jpg"
-                alt="John"
-              >
+              <img src="https://cdn.vuetifyjs.com/images/john.jpg" alt="John" />
             </v-avatar>
           </v-col>
           <v-col cols="9" sm="9">
@@ -42,7 +36,7 @@
               <v-col cols="12" sm="12">
                 <v-select
                   class="customLanguageSelect"
-                  style="width:150px"
+                  style="width: 150px"
                   v-model="selectLanguage"
                   :items="selectLanguageItems"
                   item-text="langText"
@@ -51,17 +45,8 @@
                   height="32"
                   @change="changeLanguage"
                 ></v-select>
-                <v-btn
-                  depressed
-                  rounded
-                  class="ml-1"
-                >
-                  <v-icon
-                    left
-                    class="mr-0"
-                  >
-                    mdi-account
-                  </v-icon>
+                <v-btn depressed rounded class="ml-1">
+                  <v-icon left class="mr-0"> mdi-account </v-icon>
                   未驗證
                 </v-btn>
               </v-col>
@@ -82,20 +67,13 @@
         <v-divider></v-divider>
         <v-list-item>
           <v-list-item-content>
-            <v-list-item-title>
-              產品
-            </v-list-item-title>
+            <v-list-item-title> 產品 </v-list-item-title>
           </v-list-item-content>
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar
-      app
-      flat
-      class="px-3 white"
-      elevation="1"
-    >
+    <v-app-bar app flat class="px-3 white" elevation="1">
       <v-toolbar-title class="mainLogo d-flex justify-center align-center">
         <nuxt-link to="/">
           <img src="@/assets/img/logo.png" />
@@ -126,59 +104,67 @@
 export default {
   data() {
     return {
-      links: [
-        '最新消息',
-        '產品',
-        '服務',
-        '幫助',
-        '關於',
-      ],
+      links: ['最新消息', '產品', '服務', '幫助', '關於'],
       drawer: false,
       isXs: false,
       items: [
-        ["mdi-wallet", this.$t('sidebar.sidebar_wallet'), "/wallet"],
-        ["mdi-format-list-bulleted", this.$t('sidebar.sidebar_orders'), "/orders"],
-        ["mdi-settings", this.$t('sidebar.sidebar_settings'), "/settings"],
-        ["mdi-login", this.$t('sidebar.sidebar_login'), "/login"],
-        ["mdi-login", this.$t('sidebar.sidebar_register'), "/register"]
+        ['mdi-wallet', this.$t('sidebar.sidebar_wallet'), '/wallet'],
+        [
+          'mdi-format-list-bulleted',
+          this.$t('sidebar.sidebar_orders'),
+          '/orders',
+        ],
+        ['mdi-settings', this.$t('sidebar.sidebar_settings'), '/settings'],
+        ['mdi-login', this.$t('sidebar.sidebar_login'), '/login'],
+        ['mdi-login', this.$t('sidebar.sidebar_register'), '/register'],
       ],
-      selectLanguageItems: [{ langText: '繁體中文', lang: 'tw' },{ langText: '簡體中文', lang: 'cn' },{ langText: 'English', lang: 'en' }],
-      selectLanguage: {}
+      selectLanguageItems: [
+        { langText: '繁體中文', lang: 'tw' },
+        { langText: '簡體中文', lang: 'cn' },
+        { langText: 'English', lang: 'en' },
+      ],
+      selectLanguage: {},
     }
   },
   methods: {
     onResize() {
-      this.isXs = window.innerWidth < 850;
+      this.isXs = window.innerWidth < 850
     },
     redirect(link) {
       this.$router.push(`${link}`)
     },
     changeLanguage(lang) {
       this.$i18n.setLocale(lang)
-    }
+    },
   },
   watch: {
     isXs(value) {
       if (!value) {
         this.drawer = false
       }
-    }
+    },
   },
   computed: {
     navItems() {
       return [
-        ["mdi-wallet", this.$t('sidebar.sidebar_wallet'), "/wallet"],
-        ["mdi-format-list-bulleted", this.$t('sidebar.sidebar_orders'), "/orders"],
-        ["mdi-settings", this.$t('sidebar.sidebar_settings'), "/settings"],
-        ["mdi-login", this.$t('sidebar.sidebar_login'), "/login"],
-        ["mdi-login", this.$t('sidebar.sidebar_register'), "/register"]
-      ];
-    }
+        ['mdi-wallet', this.$t('sidebar.sidebar_wallet'), '/wallet'],
+        [
+          'mdi-format-list-bulleted',
+          this.$t('sidebar.sidebar_orders'),
+          '/orders',
+        ],
+        ['mdi-settings', this.$t('sidebar.sidebar_settings'), '/settings'],
+        ['mdi-login', this.$t('sidebar.sidebar_login'), '/login'],
+        ['mdi-login', this.$t('sidebar.sidebar_register'), '/register'],
+      ]
+    },
   },
   mounted() {
-    this.onResize();
-    window.addEventListener("resize", this.onResize, { passive: true });
-    this.selectLanguage = this.selectLanguageItems.find(o => o.lang === this.$i18n.locale)
+    this.onResize()
+    window.addEventListener('resize', this.onResize, { passive: true })
+    this.selectLanguage = this.selectLanguageItems.find(
+      (o) => o.lang === this.$i18n.locale
+    )
   },
   beforeDestroy() {
     window.removeEventListener('resize', this.onResize)
@@ -214,8 +200,10 @@ export default {
   line-height: 1.2rem;
 }
 // 修改 v-select 高度
-::v-deep .v-text-field--filled > .v-input__control > .v-input__slot, .v-text-field--full-width > .v-input__control > .v-input__slot, .v-text-field--outlined > .v-input__control > .v-input__slot{
-  min-height: auto!important;
+::v-deep .v-text-field--filled > .v-input__control > .v-input__slot,
+.v-text-field--full-width > .v-input__control > .v-input__slot,
+.v-text-field--outlined > .v-input__control > .v-input__slot {
+  min-height: auto !important;
 }
 ::v-deep .v-input__append-inner {
   margin-top: 0px;
