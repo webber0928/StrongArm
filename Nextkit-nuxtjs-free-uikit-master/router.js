@@ -16,7 +16,25 @@ export function createRouter() {
       {
         path: '/',
         name: '首頁',
-        component: () => import("@/pages/index").then(m => m.default || m),
+        component: () => import("@/pages/example/index").then(m => m.default || m),
+        // component: () => import("@/pages/home/index").then(m => m.default || m),
+      },
+      {
+        path: '/about',
+        name: '關於我',
+        component: () => import("@/pages/example/topics").then(m => m.default || m),
+        // component: () => import("@/pages/home/index").then(m => m.default || m),
+      },
+      {
+        path: '/basic-components',
+        name: '關於我',
+        component: () => import("@/pages/example/basic-components").then(m => m.default || m),
+        // component: () => import("@/pages/home/index").then(m => m.default || m),
+      },
+      {
+        path: '/work',
+        name: '關於我',
+        component: () => import("@/pages/example/coming-soon").then(m => m.default || m),
         // component: () => import("@/pages/home/index").then(m => m.default || m),
       },
       // {
